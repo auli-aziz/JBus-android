@@ -25,8 +25,17 @@ public class Bus extends Serializable {
             Random rand = new Random();
 
             bus.name = "Bus " + i;
-            bus.capacity = rand.nextInt(50-5) + 5;
-            bus.busType = BusType.REGULER;
+            bus.capacity = rand.nextInt(200-5) + 5;
+            if(bus.capacity < 10) {
+                bus.busType = BusType.MINIBUS;
+            } else if(bus.capacity >= 10 && bus.capacity< 50) {
+                bus.busType = BusType.REGULER;
+
+            } else if(bus.capacity >= 50 && bus.capacity< 125) {
+                bus.busType = BusType.HIGH_DECKER;
+            } else {
+                bus.busType = BusType.DOUBLE_DECKER;
+            }
             busList.add(bus);
         }
 
@@ -49,6 +58,7 @@ public class Bus extends Serializable {
         return this.busType.toString();
     }
 
+    @NonNull
     public String getCapacity() {
         return "Capacity: " + Integer.toString(this.capacity);
     }

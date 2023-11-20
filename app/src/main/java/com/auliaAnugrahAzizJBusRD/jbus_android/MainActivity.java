@@ -18,17 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
-import com.auliaAnugrahAzizJBusRD.jbus_android.model.BusArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public BusArrayAdapter busArrayAdapter;
     private TextView loginNow = null;
     ListView listView;
     private Button[] btns;
     private int currentPage = 0;
-    private int pageSize = 12; // kalian dapat bereksperimen dengan field ini
+    private int pageSize = 12;
     private int listSize;
     private int noOfPages;
     private List<Bus> listBus = new ArrayList<>();
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BusArrayAdapter busArrayAdapter = new BusArrayAdapter(this, Bus.sampleBusList(20));
+        busArrayAdapter = new BusArrayAdapter(this, Bus.sampleBusList(20));
 
         listView = findViewById(R.id.listView);
         listView.setAdapter(busArrayAdapter);
@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.next_page);
         pageScroll = findViewById(R.id.page_number_scroll);
         busListView = findViewById(R.id.listView);
-// membuat sample list
-        listBus = Bus.sampleBusList(20);
+
+        listBus = Bus.sampleBusList(60);
         listSize = listBus.size();
-// construct the footer
+
         paginationFooter();
         goToPage(currentPage);
-// listener untuk button prev dan button
+
         prevButton.setOnClickListener(v -> {
             currentPage = currentPage != 0? currentPage-1 : 0;
             goToPage(currentPage);
@@ -86,10 +86,7 @@ public class MainActivity extends AppCompatActivity {
 // ganti dengan warna yang kalian mau
             btns[i].setTextColor(getResources().getColor(R.color.black));
             btns[i].setTextSize(16);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                    150,
-                    150
-            );
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(150,150);
             ll.addView(btns[i], lp);
             final int j = i;
             btns[j].setOnClickListener(v -> {
@@ -117,11 +114,9 @@ public class MainActivity extends AppCompatActivity {
         int startIndex = page * pageSize;
         int endIndex = Math.min(startIndex + pageSize, listBus.size());
         List<Bus> paginatedList = listBus.subList(startIndex, endIndex);
-// Tampilkan paginatedList ke listview
-// seperti yang sudah kalian lakukan sebelumnya,
-// menggunakan array adapter.
-        BusArrayAdapter busArrayAdapter = (BusArrayAdapter) listView.getAdapter();
-        busArrayAdapter.clear(); // Clear existing data
+
+        busArrayAdapter = (BusArrayAdapter) listView.getAdapter();
+        busArrayAdapter.clear();
         busArrayAdapter.addAll(paginatedList);
     }
 

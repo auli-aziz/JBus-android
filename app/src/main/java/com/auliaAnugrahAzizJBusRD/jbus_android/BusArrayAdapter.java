@@ -1,4 +1,4 @@
-package com.auliaAnugrahAzizJBusRD.jbus_android.model;
+package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.auliaAnugrahAzizJBusRD.R;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 
 import java.util.List;
 
