@@ -1,4 +1,4 @@
-package com.auliaAnugrahAzizJBusRD;
+package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +9,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RegisterActivity extends AppCompatActivity {
-    private TextView loginNow = null;
-    private Button registerButton = null;
+import com.auliaAnugrahAzizJBusRD.R;
+
+
+public class LoginActivity extends AppCompatActivity {
+//    Button loginBtn;
+    private TextView registerNow = null;
+    private Button loginButton = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         try {
             getSupportActionBar().hide();
@@ -23,12 +28,17 @@ public class RegisterActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        loginNow = findViewById(R.id.login_now);
-        registerButton = findViewById(R.id.register_button);
+        registerNow = findViewById(R.id.register_now);
+        loginButton = findViewById(R.id.login_button);
 
-        loginNow.setOnClickListener(v -> {
-            moveActivity(this, LoginActivity.class);
-            viewToast(this, "Moved to login from register");
+        registerNow.setOnClickListener(v -> {
+            moveActivity(this, RegisterActivity.class);
+            viewToast(this, "Moved to register from login");
+        });
+
+        loginButton.setOnClickListener(v -> {
+            moveActivity(this, MainActivity.class);
+            viewToast(this, "Moved to main from login");
         });
     }
 
