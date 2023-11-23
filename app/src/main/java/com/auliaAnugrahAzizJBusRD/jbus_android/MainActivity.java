@@ -43,6 +43,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        BaseApiService mApiService = UtilsApi.getApiService();
+//        // call the method
+//        mApiService.getAccountbyId(0).enqueue(new Callback<Account>() {
+//            @Override
+//            public void onResponse(Call<Account> call, Response<Account> response) {
+//                if (response.isSuccessful()) {
+//                    // handling potential 4xx & 5xx error
+//                    Account responseAccount = response.body();
+//                    System.out.println(responseAccount);
+//                    return;
+//                } else {
+//                    System.out.println("Error: " + response.errorBody());
+//                }
+//                int statusCode = response.code();
+//                // if success, store the response body
+//
+//                // do something
+//
+//                System.out.println("Status Code: " + statusCode);
+//            }
+//            // method for handling error talking to the server
+//            @Override
+//            public void onFailure(Call<Account> call, Throwable t) {
+//                // do something
+//                System.out.println("Network error: " + t.getMessage());
+//            }
+//        });
+
+
         busArrayAdapter = new BusArrayAdapter(this, Bus.sampleBusList(20));
 
         listView = findViewById(R.id.listView);
