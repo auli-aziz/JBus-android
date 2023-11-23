@@ -22,7 +22,7 @@ public class RetrofitClient {
                 .addNetworkInterceptor(chain -> {
                     Request originalRequest = chain.request();
                     Request newRequest = originalRequest.newBuilder()
-                            .addHeader("Aulia-Aziz", "changemepls")
+                            .addHeader("Client-Name", "auliaAnugrahAziz")
                             .build();
                     return chain.proceed(newRequest);
                 })
