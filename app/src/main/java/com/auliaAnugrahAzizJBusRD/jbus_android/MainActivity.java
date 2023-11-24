@@ -1,5 +1,6 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,17 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
-import com.auliaAnugrahAzizJBusRD.jbus_android.model.Account;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     public BusArrayAdapter busArrayAdapter;
@@ -51,33 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         BaseApiService mApiService = UtilsApi.getApiService();
-        // call the method
-        mApiService.getAccountbyId(0).enqueue(new Callback<Account>() {
-            @Override
-            public void onResponse(Call<Account> call, Response<Account> response) {
-                if (response.isSuccessful()) {
-                    // handling potential 4xx & 5xx error
-                    Account responseAccount = response.body();
-                    System.out.println(responseAccount);
-                    return;
-                } else {
-                    System.out.println("Error: " + response.errorBody());
-                }
-                int statusCode = response.code();
-                // if success, store the response body
-
-                // do something
-
-                System.out.println("Status Code: " + statusCode);
-            }
-            // method for handling error talking to the server
-            @Override
-            public void onFailure(Call<Account> call, Throwable t) {
-                // do something
-                System.out.println("Network error: " + t.getMessage());
-            }
-        });
-
 
         busArrayAdapter = new BusArrayAdapter(this, Bus.sampleBusList(20));
 
@@ -172,12 +141,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( @NonNull MenuItem item ) {
         if(item.getItemId() == R.id.account_profile) {
-            Toast.makeText(this, "Account Clicked", Toast.LENGTH_SHORT).show();
             Intent aboutMeIntent = new Intent(this, AboutMeActivity.class);
             startActivity(aboutMeIntent);
         } else if (item.getItemId() == R.id.payment){
             Toast.makeText(this, "Payment Clicked", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void viewToast(Context ctx, String message) {
+        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
     }
 }
