@@ -1,12 +1,12 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -46,6 +46,7 @@ public class AddBusActivity extends AppCompatActivity {
     private CheckBox acCheckBox, wifiCheckBox, toiletCheckBox, lcdCheckBox;
     private CheckBox coolboxCheckBox, lunchCheckBox, baggageCheckBox, electricCheckBox;
     private List<Facility> selectedFacilities = new ArrayList<>();
+    private Button addButton;
 
     AdapterView.OnItemSelectedListener busTypeOISL = new
             AdapterView.OnItemSelectedListener() {
@@ -99,9 +100,9 @@ public class AddBusActivity extends AppCompatActivity {
         busName = findViewById(R.id.bus_name);
         capacity = findViewById(R.id.capacity);
         price = findViewById(R.id.price);
+        addButton = findViewById(R.id.add_bus);
 
         handleGetAllStation();
-        handleFacilities();
 
         busTypeSpinner = this.findViewById(R.id.bus_type_dropdown);
         departureSpinner = this.findViewById(R.id.departure_dropdown);
@@ -112,11 +113,11 @@ public class AddBusActivity extends AppCompatActivity {
         busTypeSpinner.setAdapter(adBus);
 
         busTypeSpinner.setOnItemSelectedListener(busTypeOISL);
-    }
 
-    private void moveActivity(Context ctx, Class<?> cls) {
-        Intent intent = new Intent(ctx, cls);
-        startActivity(intent);
+        addButton.setOnClickListener(v -> {
+            handleFacilities();
+            handleAddBus();
+        });
     }
 
     protected void handleGetAllStation() {
@@ -168,7 +169,6 @@ public class AddBusActivity extends AppCompatActivity {
         String busNameS = busName.getText().toString();
         String capacityS = capacity.getText().toString();
         String priceS = price.getText().toString();
-        String busTypeS = busType.toString();
         if(busNameS.isEmpty() || capacityS.isEmpty() || priceS.isEmpty()) {
             Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
             return;
@@ -176,6 +176,7 @@ public class AddBusActivity extends AppCompatActivity {
         mApiService.create(LoginActivity.loggedAccount.id, busNameS, Integer.parseInt(capacityS), selectedFacilities, selectedBusType, Integer.parseInt(priceS), selectedDeptStationID, selectedArrStationID).enqueue(new Callback<BaseResponse<Bus>>() {
             @Override
             public void onResponse(Call<BaseResponse<Bus>> call, Response<BaseResponse<Bus>> response) {
+                Toast.makeText(mContext, selectedFacilities.toString(), Toast.LENGTH_LONG);
                 if (!response.isSuccessful()) {
                     Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
@@ -184,7 +185,6 @@ public class AddBusActivity extends AppCompatActivity {
                 BaseResponse<Bus> res = response.body();
                 if (res.success) {
                     Toast.makeText(mContext, "Berhasil menambahkan bus", Toast.LENGTH_SHORT);
-                    moveActivity(mContext, ManageBusActivity.class);
                     finish();
                 }
                 Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();

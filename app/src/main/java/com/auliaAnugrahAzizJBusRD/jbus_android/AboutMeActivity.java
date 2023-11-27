@@ -66,12 +66,12 @@ public class AboutMeActivity extends AppCompatActivity {
         TextView renterStatus = new TextView(this);
 
         renterStatus.setTextColor(getResources().getColor(R.color.black));
-        renterStatus.setTextSize(16);
+        renterStatus.setTextSize(17);
 
         if(LoginActivity.loggedAccount.company == null) {
             TextView registerCompany = new TextView(this);
             registerCompany.setTextColor(getResources().getColor(R.color.black));
-            renterStatus.setTextSize(27);
+            registerCompany.setTextSize(20);
 
             renterStatus.setText("You're not registered as a renter");
             registerCompany.setText("Register Here");

@@ -52,7 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener(v -> {
             handleRegister();
-            moveActivity(this, LoginActivity.class);
         });
     }
 
@@ -81,7 +80,10 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 BaseResponse<Account> res = response.body();
-                if (res.success) finish();
+                if (res.success) {
+                    Toast.makeText(mContext, "Akun berhasil dibuat", Toast.LENGTH_SHORT);
+                    finish();
+                };
                 Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
             }
 
