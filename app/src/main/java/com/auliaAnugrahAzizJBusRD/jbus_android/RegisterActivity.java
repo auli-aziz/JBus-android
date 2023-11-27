@@ -47,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register_button);
 
         loginNow.setOnClickListener(v -> {
-            viewToast(this, "moved to login from register");
             moveActivity(this, LoginActivity.class);
         });
 

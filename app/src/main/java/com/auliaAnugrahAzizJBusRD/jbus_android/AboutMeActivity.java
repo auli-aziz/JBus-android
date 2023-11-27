@@ -1,9 +1,14 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +25,9 @@ import retrofit2.Response;
 
 public class AboutMeActivity extends AppCompatActivity {
     private TextView initial, username, email, balance;
-    private Button topUp;
     private Context mContext;
     private BaseApiService mApiService;
+    private Button topUp;
     private EditText amount;
 
     @Override
@@ -47,10 +52,64 @@ public class AboutMeActivity extends AppCompatActivity {
         topUp.setOnClickListener(v -> {
             handleTopUp();
         });
+
+        renterSection();
     }
 
-    private void viewToast(Context ctx, String message) {
-        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
+    private void moveActivity(Context ctx, Class<?> cls) {
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
+    }
+
+    private void renterSection() {
+        LinearLayout ll = findViewById(R.id.renter_layout);
+        TextView renterStatus = new TextView(this);
+
+        renterStatus.setTextColor(getResources().getColor(R.color.black));
+        renterStatus.setTextSize(16);
+
+        if(LoginActivity.loggedAccount.company == null) {
+            TextView registerCompany = new TextView(this);
+            registerCompany.setTextColor(getResources().getColor(R.color.black));
+            renterStatus.setTextSize(27);
+
+            renterStatus.setText("You're not registered as a renter");
+            registerCompany.setText("Register Here");
+            registerCompany.setTypeface(null, Typeface.BOLD);
+
+            registerCompany.setOnClickListener(v -> {
+                moveActivity(this, RegisterRenterActivity.class);
+            });
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+
+            ll.addView(renterStatus, lp);
+            ll.addView(registerCompany, lp);
+        } else {
+            Button manageBus = new Button(this);
+
+            renterStatus.setText("You're already registered as renter");
+            manageBus.setText("Manage Bus");
+            manageBus.setTextSize(16);
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+
+            manageBus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    moveActivity(mContext, ManageBusActivity.class);
+                }
+            });
+
+            ll.addView(renterStatus, lp);
+            ll.addView(manageBus, lp);
+        }
     }
 
     protected void handleTopUp() {

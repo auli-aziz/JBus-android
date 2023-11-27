@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public BusArrayAdapter busArrayAdapter;
-    private TextView loginNow = null;
+    private TextView loginNow = null; // ga kepake
     ListView listView;
     private Button[] btns;
     private int currentPage = 0;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Bus> listBus = new ArrayList<>();
     private Button prevButton = null;
     private Button nextButton = null;
-    private ListView busListView = null;
+    private ListView busListView = null; // ga kepake
     private HorizontalScrollView pageScroll = null;
 
 
@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
         goToPage(currentPage);
 
         prevButton.setOnClickListener(v -> {
-            currentPage = currentPage != 0? currentPage-1 : 0;
+            currentPage = (currentPage != 0)? currentPage - 1 : 0;
             goToPage(currentPage);
         });
         nextButton.setOnClickListener(v -> {
-            currentPage = currentPage != noOfPages -1? currentPage+1 : currentPage;
+            currentPage = (currentPage != noOfPages - 1)? currentPage + 1 : currentPage;
             goToPage(currentPage);
         });
     }
