@@ -61,7 +61,6 @@ public class ManageBusActivity extends AppCompatActivity {
     }
 
     protected void handleGetMyBus() {
-        // Make the GET request using Retrofit
         mApiService.getMyBus(LoginActivity.loggedAccount.id).enqueue(new Callback<List<Bus>>() {
             @Override
             public void onResponse(Call<List<Bus>> call, Response<List<Bus>> response) {
@@ -76,7 +75,7 @@ public class ManageBusActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         listBus.clear();
                         listBus.addAll(busList);
-                        myBusArrayAdapter.notifyDataSetChanged(); // Notify the adapter of the change
+                        myBusArrayAdapter.notifyDataSetChanged();
                     });
                 } else {
                     Toast.makeText(mContext, "No buses found for the given account ID", Toast.LENGTH_SHORT).show();

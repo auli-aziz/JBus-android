@@ -62,7 +62,18 @@ public interface BaseApiService {
             @Query("stationArrivalId") int stationArrivalId
     );
 
+    @POST("bus/addSchedule")
+    Call<BaseResponse<Bus>> addSchedule(
+            @Query("busId") int busId,
+            @Query("time") String time
+    );
+
     @GET("station/getAll")
     Call<List<Station>> getAllStation ();
+
+    @GET("bus/getMyBusDetails")
+    Call<Bus> getMyBusDetails(
+            @Query("busId") int busId
+    );
 
 }

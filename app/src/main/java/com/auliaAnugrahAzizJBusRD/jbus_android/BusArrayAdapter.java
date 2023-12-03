@@ -43,7 +43,7 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
         textView2.setText(currentNumberPosition.getType());
 
         TextView textView3 = currentItemView.findViewById(R.id.textView3);
-        textView3.setText(currentNumberPosition.getCapacity());
+        textView3.setText("Capacity: " + currentNumberPosition.getCapacity());
 
         return currentItemView;
     }

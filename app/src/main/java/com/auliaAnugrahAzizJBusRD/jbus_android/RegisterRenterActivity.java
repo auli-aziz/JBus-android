@@ -27,7 +27,7 @@ public class RegisterRenterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regiseter_renter);
+        setContentView(R.layout.activity_register_renter);
 
         mContext = this;
         mApiService = UtilsApi.getApiService();

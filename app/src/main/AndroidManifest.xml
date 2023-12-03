@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".jbus_android.BusDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".jbus_android.AddBusActivity"
             android:exported="false" />
         <activity

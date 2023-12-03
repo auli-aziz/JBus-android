@@ -24,9 +24,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AboutMeActivity extends AppCompatActivity {
-    private TextView initial, username, email, balance;
     private Context mContext;
     private BaseApiService mApiService;
+    private TextView initial, username, email, balance;
     private Button topUp;
     private EditText amount;
 

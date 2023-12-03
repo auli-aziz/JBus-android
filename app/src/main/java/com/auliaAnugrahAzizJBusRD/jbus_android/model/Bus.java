@@ -49,6 +49,11 @@ public class Bus extends Serializable {
 //    }
 
     @NonNull
+    public int getBusId() {
+        return this.id;
+    }
+
+    @NonNull
     public String getName() {
         return this.name;
     }
@@ -60,6 +65,6 @@ public class Bus extends Serializable {
 
     @NonNull
     public String getCapacity() {
-        return "Capacity: " + Integer.toString(this.capacity);
+        return Integer.toString(this.capacity);
     }
 }
