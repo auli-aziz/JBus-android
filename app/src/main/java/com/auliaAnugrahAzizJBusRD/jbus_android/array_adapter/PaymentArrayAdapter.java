@@ -7,17 +7,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.auliaAnugrahAzizJBusRD.R;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.BaseResponse;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Invoice;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Payment;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
@@ -96,28 +102,28 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         boolean isAccepted, isCanceled;
     }
 
-//    protected void handleAccept(int id) {
-//        mApiService.acccept(id).enqueue(new Callback<BaseResponse<Payment>>() {
-//            @Override
-//            public void onResponse(Call<BaseResponse<Payment>> call, Response<BaseResponse<Payment>> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(context, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//                if (response.body() != null) {
-//                    BaseResponse<Payment> res = response.body();
-//                } else {
-//                    Toast.makeText(context, "Response body is null", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
-//                Toast.makeText(context, "Problem with the server", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    protected void handleAccept(int id) {
+        mApiService.acccept(id).enqueue(new Callback<BaseResponse<Payment>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Payment>> call, Response<BaseResponse<Payment>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (response.body() != null) {
+                    BaseResponse<Payment> res = response.body();
+                } else {
+                    Toast.makeText(context, "Response body is null", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
+                Toast.makeText(context, "Problem with the server", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 //    protected void handleCancel(int id, int buyerId, int busId) {
 //        mApiService.cancel(id, buyerId, busId).enqueue(new Callback<BaseResponse<Payment>>() {

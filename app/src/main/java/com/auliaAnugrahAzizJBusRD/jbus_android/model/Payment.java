@@ -8,9 +8,14 @@ public class Payment extends Invoice {
     public Timestamp departureDate;
     public List<String> busSeat;
 
-    public Payment() {
-        super();
-    }
+
+//    public Payment(Account buyer, Renter renter, int busId, List<String> busSeat, Timestamp departureDate) {
+//        super(buyer.id, renter.id);
+//
+//        this.busId = busId;
+//        this.departureDate = departureDate;
+//        this.busSeat = busSeat;
+//    }
 
 
 }
