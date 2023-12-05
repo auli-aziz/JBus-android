@@ -5,6 +5,7 @@ import com.auliaAnugrahAzizJBusRD.jbus_android.model.BaseResponse;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.BusType;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Facility;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Payment;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Renter;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Station;
 
@@ -76,4 +77,13 @@ public interface BaseApiService {
             @Query("busId") int busId
     );
 
+    @GET("payment/getPaymentRequests")
+    Call<List<Payment>> getPaymentRequests(
+            @Query("busId") int busId
+    );
+
+//    @GET("payment/{id}/accept")
+//    Call<BaseResponse<Payment>> acccept(
+//            @Path("id") int id
+//    );
 }

@@ -12,12 +12,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
+import com.auliaAnugrahAzizJBusRD.jbus_android.array_adapter.BusArrayAdapter;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
@@ -141,15 +141,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected( @NonNull MenuItem item ) {
         if(item.getItemId() == R.id.account_profile) {
-            Intent aboutMeIntent = new Intent(this, AboutMeActivity.class);
-            startActivity(aboutMeIntent);
+            moveActivity(this, AboutMeActivity.class);
         } else if (item.getItemId() == R.id.payment){
-            Toast.makeText(this, "Payment Clicked", Toast.LENGTH_SHORT).show();
+            moveActivity(this, PaymentActivity.class);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void viewToast(Context ctx, String message) {
-        Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show();
+    private void moveActivity(Context ctx, Class<?> cls) {
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
     }
 }

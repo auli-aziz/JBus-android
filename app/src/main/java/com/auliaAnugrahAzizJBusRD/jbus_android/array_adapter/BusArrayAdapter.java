@@ -1,4 +1,4 @@
-package com.auliaAnugrahAzizJBusRD.jbus_android;
+package com.auliaAnugrahAzizJBusRD.jbus_android.array_adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
