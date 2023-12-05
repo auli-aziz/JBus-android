@@ -18,9 +18,6 @@ import java.util.List;
 public class BusArrayAdapter extends ArrayAdapter<Bus> {
 
     public BusArrayAdapter(@NonNull Context context, List<Bus> list) {
-
-        // pass the context and list for the super
-        // constructor of the ArrayAdapter class
         super(context, 0, list);
     }
 

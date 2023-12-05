@@ -53,7 +53,6 @@ public class ManageBusActivity extends AppCompatActivity {
         addBus.setOnClickListener(v -> {
             moveActivity(mContext, AddBusActivity.class);
         });
-
     }
 
     private void moveActivity(Context ctx, Class<?> cls) {

@@ -77,6 +77,9 @@ public interface BaseApiService {
             @Query("busId") int busId
     );
 
+    @GET("bus/getAll")
+    Call<List<Bus>> getAllBus();
+
     @GET("payment/getPaymentRequests")
     Call<List<Payment>> getPaymentRequests(
             @Query("busId") int busId

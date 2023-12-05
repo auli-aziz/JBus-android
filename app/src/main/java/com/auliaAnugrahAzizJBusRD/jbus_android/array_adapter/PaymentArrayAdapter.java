@@ -62,17 +62,18 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
         viewHolder.departureDate.setText(currentPaymentPosition.departureDate.toString());
-//        viewHolder.id = currentPaymentPosition.id;
-//        viewHolder.status = currentPaymentPosition.status;
-//
-//        if(viewHolder.status == Invoice.PaymentStatus.SUCCESS) {
-//            viewHolder.acceptButton.setEnabled(false);
-//        }
-//
-//        if(viewHolder.status == Invoice.PaymentStatus.FAILED) {
-//            viewHolder.acceptButton.setEnabled(false);
-//            viewHolder.cancelButton.setEnabled(false);
-//        }
+        viewHolder.orderDate.setText(currentPaymentPosition.time.toString());
+        viewHolder.id = currentPaymentPosition.id;
+        viewHolder.status = currentPaymentPosition.status;
+
+        if(viewHolder.status == Invoice.PaymentStatus.SUCCESS) {
+            viewHolder.acceptButton.setEnabled(false);
+        }
+
+        if(viewHolder.status == Invoice.PaymentStatus.FAILED) {
+            viewHolder.acceptButton.setEnabled(false);
+            viewHolder.cancelButton.setEnabled(false);
+        }
 
         viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
