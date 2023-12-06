@@ -89,4 +89,9 @@ public interface BaseApiService {
     Call<BaseResponse<Payment>> acccept(
             @Path("id") int id
     );
+
+    @GET("payment/getPayments")
+    Call<List<Payment>> getPayments(
+            @Query("buyerId") int buyerId
+    );
 }

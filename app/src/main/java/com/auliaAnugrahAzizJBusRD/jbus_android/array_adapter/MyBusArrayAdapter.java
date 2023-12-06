@@ -39,7 +39,6 @@ public class MyBusArrayAdapter extends ArrayAdapter<Bus> {
         View currentItemView = convertView;
 
         if (currentItemView == null) {
-            // di sini terhubung dengan my_bus_view
             currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.my_bus_view, parent, false);
         }
 

@@ -49,8 +49,6 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
             viewHolder.orderDate = convertView.findViewById(R.id.order_date);
             viewHolder.acceptButton = convertView.findViewById(R.id.acc_button);
             viewHolder.cancelButton = convertView.findViewById(R.id.cancel_button);
-            viewHolder.isAccepted = false;
-            viewHolder.isCanceled = false;
 
             convertView.setTag(viewHolder);
         } else {
@@ -78,8 +76,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 viewHolder.acceptButton.setEnabled(false);
-                viewHolder.isAccepted = true;
-//                handleAccept(viewHolder.id);
+                handleAccept(viewHolder.id);
             }
         });
 
@@ -100,7 +97,6 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         Invoice.PaymentStatus status;
         TextView busSeats, departureDate, orderDate;
         Button acceptButton, cancelButton;
-        boolean isAccepted, isCanceled;
     }
 
     protected void handleAccept(int id) {

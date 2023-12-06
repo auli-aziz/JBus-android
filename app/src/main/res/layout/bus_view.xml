@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tools:ignore="UselessParent">
+    tools:ignore="UselessParent"
+    android:id="@+id/bus_item"
+    android:gravity="center_vertical">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingHorizontal="20dp">
@@ -22,8 +24,9 @@
             android:layout_marginTop="16dp"
             android:gravity="bottom|left"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
+            android:text="-"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -32,7 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="top|left"
             android:textColor="@android:color/holo_purple"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -42,9 +45,15 @@
             android:layout_marginBottom="16dp"
             android:gravity="top|left"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/book_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BOOK" />
 
 </LinearLayout>
