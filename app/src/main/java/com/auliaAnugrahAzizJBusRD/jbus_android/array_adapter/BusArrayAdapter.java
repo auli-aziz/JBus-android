@@ -43,8 +43,9 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
         TextView textView1 = currentItemView.findViewById(R.id.textView1);
         textView1.setText(currentBusPosition.name);
 
+        // TODO: fix null city
         TextView textView2 = currentItemView.findViewById(R.id.textView2);
-        textView2.setText(currentBusPosition.departure.stationName.substring(9) + " > " + currentBusPosition.arrival.stationName.substring(9));
+        textView2.setText(currentBusPosition.departure.city + " - " + currentBusPosition.arrival.city);
 
         TextView textView3 = currentItemView.findViewById(R.id.textView3);
         textView3.setText("Price: " + currentBusPosition.price.price);

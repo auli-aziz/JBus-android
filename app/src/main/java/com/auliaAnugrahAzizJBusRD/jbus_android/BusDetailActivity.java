@@ -49,7 +49,6 @@ public class BusDetailActivity extends AppCompatActivity {
         if(b!=null) {
             busId = Integer.parseInt(b.get("BUS_ID").toString());
             name = b.get("BUS_NAME").toString();
-//            setDetail(b);
         } else {
             Toast.makeText(mContext, "Cannot retrieve bus detail", Toast.LENGTH_SHORT).show();
         }
