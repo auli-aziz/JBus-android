@@ -2,7 +2,11 @@ package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -12,11 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Schedule;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
 
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -32,18 +39,19 @@ public class MakeBookingActivity extends AppCompatActivity {
     private Locale locale = new Locale("id", "ID");
     private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
     private Spinner schedSpinner;
-    private Timestamp[] departureSchedule;
+    List<Schedule> schedList = new ArrayList<>();
+    private Timestamp selectedSched;
 
-//    AdapterView.OnItemSelectedListener busTypeOISL = new
-//            AdapterView.OnItemSelectedListener() {
-//                @Override
-//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                    ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
-//                    selectedBusType = departureSchedule[position];
-//                }
-//                @Override
-//                public void onNothingSelected(AdapterView<?> parent) {}
-//            };
+    AdapterView.OnItemSelectedListener scheduleOISL = new
+            AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+                    selectedSched = schedList.get(position).departureSchedule;
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,7 @@ public class MakeBookingActivity extends AppCompatActivity {
         departure = findViewById(R.id.departure);
         arrival = findViewById(R.id.arrival);
         balance = findViewById(R.id.balance);
+        schedSpinner = findViewById(R.id.schedule_dropdown);
 
         makeBooking = findViewById(R.id.make_booking);
 
@@ -96,11 +105,21 @@ public class MakeBookingActivity extends AppCompatActivity {
                 }
                 Bus b = response.body();
 
+                schedList = response.body().schedules;
+
                 String formattedPrice = currencyFormat.format(b.price.price);
 
                 seatPrice.setText("-" + formattedPrice);
                 departure.setText(b.departure.stationName);
                 arrival.setText(b.arrival.stationName);
+
+                if(schedList != null) {
+                    ArrayAdapter busSched = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, schedList);
+                    busSched.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                    schedSpinner.setAdapter(busSched);
+
+                    schedSpinner.setOnItemSelectedListener(scheduleOISL);
+                }
             }
 
 
