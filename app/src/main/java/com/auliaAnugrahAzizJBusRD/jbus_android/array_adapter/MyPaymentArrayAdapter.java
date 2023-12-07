@@ -78,7 +78,7 @@ public class MyPaymentArrayAdapter extends ArrayAdapter<Payment> {
     }
 
     protected void handleGetBusDetails(ViewHolder viewHolder, Payment currentPaymentPosition) {
-        mApiService.getMyBusDetails(currentPaymentPosition.getBusId()).enqueue(new Callback<Bus>() {
+        mApiService.getBusDetails(currentPaymentPosition.getBusId()).enqueue(new Callback<Bus>() {
             @Override
             public void onResponse(Call<Bus> call, Response<Bus> response) {
                 if (!response.isSuccessful()) {

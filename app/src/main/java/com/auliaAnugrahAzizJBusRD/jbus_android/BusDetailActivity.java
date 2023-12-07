@@ -13,6 +13,9 @@ import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +26,8 @@ public class BusDetailActivity extends AppCompatActivity {
     private TextView busName, busType, busCapacity, busPrice, departureStat, arrivalStat, departureAdd, departureCity, arrivalAdd, arrivalCity;
     private String name;
     private int busId;
+    private Locale locale = new Locale("id", "ID");
+    private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,7 @@ public class BusDetailActivity extends AppCompatActivity {
     }
 
     protected void handleDetails() {
-        mApiService.getMyBusDetails(busId).enqueue(new Callback<Bus>() {
+        mApiService.getBusDetails(busId).enqueue(new Callback<Bus>() {
             @Override
             public void onResponse(Call<Bus> call, Response<Bus> response) {
                 if (!response.isSuccessful()) {
@@ -68,12 +73,13 @@ public class BusDetailActivity extends AppCompatActivity {
                 Bus b = response.body();
                 busType.setText(b.busType.toString());
                 busCapacity.setText(b.getCapacity());
-                busPrice.setText(Double.toString(b.price.price));
+                String formattedPrice = currencyFormat.format(b.price.price);
+                busPrice.setText(formattedPrice);
                 departureStat.setText(b.departure.stationName);
                 arrivalStat.setText(b.arrival.stationName);
-                departureCity.setText(b.departure.city.toString());
+//                departureCity.setText(b.departure.city.toString());
                 departureAdd.setText(b.departure.address);
-                arrivalCity.setText(b.arrival.city.toString());
+//                arrivalCity.setText(b.arrival.city.toString());
                 arrivalAdd.setText(b.arrival.address);
             }
 

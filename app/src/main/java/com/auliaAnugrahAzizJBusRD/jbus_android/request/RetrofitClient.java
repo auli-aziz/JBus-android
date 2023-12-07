@@ -36,7 +36,7 @@ public class RetrofitClient {
 
     private static Gson createGson() {
         return new GsonBuilder()
-                .setDateFormat("MMMM dd, yyyy HH:mm:ss")  // Specify your date format here
+                .setDateFormat("MMMM dd, yyyy HH:mm:ss") 
                 .create();
     }
 }

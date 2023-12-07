@@ -18,10 +18,14 @@ import com.auliaAnugrahAzizJBusRD.jbus_android.BusDetailActivity;
 import com.auliaAnugrahAzizJBusRD.jbus_android.MakeBookingActivity;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class BusArrayAdapter extends ArrayAdapter<Bus> {
     private Context context;
+    private Locale locale = new Locale("id", "ID");
+    private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 
     public BusArrayAdapter(@NonNull Context context, List<Bus> list) {
         super(context, 0, list);
@@ -48,7 +52,9 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
         textView2.setText(currentBusPosition.departure.city + " - " + currentBusPosition.arrival.city);
 
         TextView textView3 = currentItemView.findViewById(R.id.textView3);
-        textView3.setText("Price: " + currentBusPosition.price.price);
+
+        String formattedPrice = currencyFormat.format(currentBusPosition.price.price);
+        textView3.setText("Price: " + formattedPrice);
 
         LinearLayout ll = currentItemView.findViewById(R.id.bus_item);
         Button book = currentItemView.findViewById(R.id.book_button);

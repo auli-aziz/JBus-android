@@ -19,6 +19,9 @@ import com.auliaAnugrahAzizJBusRD.jbus_android.model.BaseResponse;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +32,8 @@ public class AboutMeActivity extends AppCompatActivity {
     private TextView initial, username, email, balance;
     private Button topUp;
     private EditText amount;
+    private Locale locale = new Locale("id", "ID");
+    private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +49,12 @@ public class AboutMeActivity extends AppCompatActivity {
         amount = findViewById(R.id.topUp);
         topUp = findViewById(R.id.topUp_button);
 
-        initial.setText(LoginActivity.loggedAccount.name.substring(0, 1).toUpperCase());
+        String formattedBalance = currencyFormat.format(LoginActivity.loggedAccount.balance);
+
+        initial.setText(LoginActivity.loggedAccount.name.substring(0, 1));
         username.setText(LoginActivity.loggedAccount.name);
         email.setText(LoginActivity.loggedAccount.email);
-        balance.setText("IDR " + LoginActivity.loggedAccount.balance);
+        balance.setText(formattedBalance);
 
         topUp.setOnClickListener(v -> {
             handleTopUp();

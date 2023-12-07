@@ -21,17 +21,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Total Price"
+            android:text="Price Per Seat"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/seat_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="- Rp200.000"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="35dp"
-            android:text="Rp200.000"
-            android:textColor="@color/white"
+            android:textColor="#E91E63"
             android:textSize="40sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -42,19 +44,94 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="161dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="417dp"
+        android:layout_marginStart="-5dp"
+        android:layout_marginTop="219dp"
+        android:layout_marginEnd="5dp"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30sp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             android:paddingHorizontal="30dp">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Departure"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/departure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="30dp">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Arrival"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/arrival"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="30dp">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Balance"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="30dp">
+
 
             <TextView
                 android:layout_width="130dp"
@@ -90,15 +167,16 @@
                 app:tint="@color/black" />
 
             <EditText
+                android:id="@+id/seat_booking"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="RDXX"/>
+                android:hint="RDXX" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -107,13 +185,17 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:background="@color/colorStateNotEnabled">
+
+
         <Button
+            android:id="@+id/make_booking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="30dp"
             app:cornerRadius="21dp"
-            android:text="Confirm"
-            />
+            android:text="Confirm" />
     </LinearLayout>
 </RelativeLayout>
