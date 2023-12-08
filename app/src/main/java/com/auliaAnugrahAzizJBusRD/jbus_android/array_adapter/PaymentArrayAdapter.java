@@ -60,8 +60,8 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
         viewHolder.departureDate.setText(currentPaymentPosition.departureDate.toString());
-        viewHolder.orderDate.setText(currentPaymentPosition.time.toString());
         viewHolder.id = currentPaymentPosition.id;
+        viewHolder.orderDate.setText(viewHolder.id);
         viewHolder.status = currentPaymentPosition.status;
 
         if(viewHolder.status == Invoice.PaymentStatus.SUCCESS) {

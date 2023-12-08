@@ -54,7 +54,7 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
         TextView textView3 = currentItemView.findViewById(R.id.textView3);
 
         String formattedPrice = currencyFormat.format(currentBusPosition.price.price);
-        textView3.setText("Price: " + formattedPrice);
+        textView3.setText(formattedPrice);
 
         LinearLayout ll = currentItemView.findViewById(R.id.bus_item);
         Button book = currentItemView.findViewById(R.id.book_button);

@@ -17,7 +17,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface BaseApiService {
+public interface BaseApiService{
     @GET("account/{id}")
     Call<Account> getAccountbyId (@Path("id") int id);
 
@@ -94,4 +94,16 @@ public interface BaseApiService {
     Call<List<Payment>> getPayments(
             @Query("buyerId") int buyerId
     );
+
+    @POST("payment/makeBooking")
+    Call<BaseResponse<Payment>> makeBooking(
+            @Query("buyerId") int buyerId,
+            @Query("renterId") int renterId,
+            @Query("busId") int busId,
+            @Query("busSeats") List<String> busSeats,
+            @Query("departureDate") String departureDate
+    );
+
+    @GET("account/{id}")
+    Call<Account> getById(@Path("id") int id);
 }

@@ -28,6 +28,7 @@ public class BusDetailActivity extends AppCompatActivity {
     private int busId;
     private Locale locale = new Locale("id", "ID");
     private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
+    private int accountId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,9 @@ public class BusDetailActivity extends AppCompatActivity {
                 departureAdd.setText(b.departure.address);
 //                arrivalCity.setText(b.arrival.city.toString());
                 arrivalAdd.setText(b.arrival.address);
+                accountId = b.accountId;
+
+                Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
             }
 
 

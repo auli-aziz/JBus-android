@@ -62,7 +62,7 @@ public class PaymentActivity extends AppCompatActivity {
                         myPaymentArrayAdapter.notifyDataSetChanged();
                     });
                 } else {
-                    Toast.makeText(mContext, "No buses found for the given account ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "No Payments Found", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Account;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.BaseResponse;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Payment;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Schedule;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
@@ -23,6 +27,7 @@ import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,12 +40,14 @@ public class MakeBookingActivity extends AppCompatActivity {
     private Context mContext;
     private int busId;
     private TextView seatPrice, departure, arrival, balance;
+    private EditText busSeat;
     private Button makeBooking;
     private Locale locale = new Locale("id", "ID");
     private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
     private Spinner schedSpinner;
     List<Schedule> schedList = new ArrayList<>();
     private Timestamp selectedSched;
+    private int renterId, accountId;
 
     AdapterView.OnItemSelectedListener scheduleOISL = new
             AdapterView.OnItemSelectedListener() {
@@ -72,6 +79,7 @@ public class MakeBookingActivity extends AppCompatActivity {
         arrival = findViewById(R.id.arrival);
         balance = findViewById(R.id.balance);
         schedSpinner = findViewById(R.id.schedule_dropdown);
+        busSeat = findViewById(R.id.seat_booking);
 
         makeBooking = findViewById(R.id.make_booking);
 
@@ -87,12 +95,65 @@ public class MakeBookingActivity extends AppCompatActivity {
         handleDetails();
         String formattedBalance = currencyFormat.format(LoginActivity.loggedAccount.balance);
         balance.setText(formattedBalance);
+//        handleGetRenterId();
 
-        Toast.makeText(this, "Bus id: " + busId, Toast.LENGTH_SHORT).show();
+
+        makeBooking.setOnClickListener(v -> {
+            handleMakeBooking();
+        });
     }
 
-    protected void handleMakeBooking() {
+//    protected void handleGetRenterId() {
+//        mApiService.getById(accountId).enqueue(new Callback<Account>() {
+//            @Override
+//            public void onResponse(Call<Account> call, Response<Account> response) {
+//                if (!response.isSuccessful()) {
+//                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                renterId = response.body().company.id;
+//                Toast.makeText(mContext, "renter: " + renterId, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Account> call, Throwable t) {
+//                Toast.makeText(mContext, "Problem with the server 1", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
+    // TODO: bisa beli bus sendiri
+    protected void handleMakeBooking() {
+        String busSeatS = busSeat.getText().toString();
+        String[] stringArray = busSeatS.split(",");
+        List<String> seatList = Arrays.asList(stringArray);
+
+        if(busSeatS.isEmpty()) {
+            Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mApiService.makeBooking(LoginActivity.loggedAccount.id, renterId, busId, seatList, selectedSched.toString()).enqueue(new Callback<BaseResponse<Payment>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Payment>> call, Response<BaseResponse<Payment>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                BaseResponse<Payment> res = response.body();
+
+                if (res.success) {
+                    Toast.makeText(mContext, "Berhasil menambahkan bus", Toast.LENGTH_SHORT);
+                    finish();
+                }
+                Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
+                Toast.makeText(mContext, "Problem with the server 2", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     protected void handleDetails() {
@@ -105,13 +166,35 @@ public class MakeBookingActivity extends AppCompatActivity {
                 }
                 Bus b = response.body();
 
-                schedList = response.body().schedules;
-
                 String formattedPrice = currencyFormat.format(b.price.price);
 
-                seatPrice.setText("-" + formattedPrice);
+                seatPrice.setText("- " + formattedPrice);
                 departure.setText(b.departure.stationName);
                 arrival.setText(b.arrival.stationName);
+
+                accountId = b.accountId;
+
+                mApiService.getById(accountId).enqueue(new Callback<Account>() {
+                    @Override
+                    public void onResponse(Call<Account> call, Response<Account> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        renterId = response.body().company.id;
+
+                        Toast.makeText(mContext, "RenterId: " + renterId, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Account> call, Throwable t) {
+                        Toast.makeText(mContext, "Problem with the server 1", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
+
+                schedList = response.body().schedules;
 
                 if(schedList != null) {
                     ArrayAdapter busSched = new ArrayAdapter(mContext, android.R.layout.simple_list_item_1, schedList);
@@ -119,13 +202,15 @@ public class MakeBookingActivity extends AppCompatActivity {
                     schedSpinner.setAdapter(busSched);
 
                     schedSpinner.setOnItemSelectedListener(scheduleOISL);
+                } else {
+                    Toast.makeText(mContext, "No Schedules Available", Toast.LENGTH_SHORT).show();
                 }
             }
 
 
             @Override
             public void onFailure(Call<Bus> call, Throwable t) {
-                Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Problem with the server 3", Toast.LENGTH_SHORT).show();
             }
         });
     }
