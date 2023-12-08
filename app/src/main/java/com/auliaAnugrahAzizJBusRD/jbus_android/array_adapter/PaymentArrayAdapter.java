@@ -60,8 +60,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
         viewHolder.departureDate.setText(currentPaymentPosition.departureDate.toString());
-        viewHolder.id = currentPaymentPosition.id;
-        viewHolder.orderDate.setText(viewHolder.id);
+        viewHolder.orderDate.setText(currentPaymentPosition.time.toString());
         viewHolder.status = currentPaymentPosition.status;
 
         if(viewHolder.status == Invoice.PaymentStatus.SUCCESS) {
@@ -75,6 +74,8 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                viewHolder.id = currentPaymentPosition.id;
+                Toast.makeText(context, "id: " +viewHolder.id, Toast.LENGTH_SHORT).show();
                 viewHolder.acceptButton.setEnabled(false);
                 handleAccept(viewHolder.id);
             }
