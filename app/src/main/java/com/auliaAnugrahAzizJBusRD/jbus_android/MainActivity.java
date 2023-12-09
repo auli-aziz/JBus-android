@@ -122,15 +122,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Type here to search");
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem logoutItem = menu.findItem(R.id.logout);
+
+        logoutItem.setVisible(false);
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Enter bus name...");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-
                 return false;
             }
 

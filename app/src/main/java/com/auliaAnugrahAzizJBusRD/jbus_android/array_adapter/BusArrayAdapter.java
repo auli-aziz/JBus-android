@@ -17,6 +17,7 @@ import com.auliaAnugrahAzizJBusRD.R;
 import com.auliaAnugrahAzizJBusRD.jbus_android.BusDetailActivity;
 import com.auliaAnugrahAzizJBusRD.jbus_android.MakeBookingActivity;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.City;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -49,7 +50,9 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
 
         // TODO: fix null city
         TextView textView2 = currentItemView.findViewById(R.id.textView2);
-        textView2.setText(currentBusPosition.departure.city + " - " + currentBusPosition.arrival.city);
+        City dep = currentBusPosition.departure.city;
+        City arr = currentBusPosition.arrival.city;
+        textView2.setText(((dep==null)? "N/A": dep) + " - " + ((arr==null)? "N/A": arr));
 
         TextView textView3 = currentItemView.findViewById(R.id.textView3);
 

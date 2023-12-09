@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
@@ -51,7 +54,7 @@ public class AboutMeActivity extends AppCompatActivity {
 
         String formattedBalance = currencyFormat.format(LoginActivity.loggedAccount.balance);
 
-        initial.setText(LoginActivity.loggedAccount.name.substring(0, 1));
+        initial.setText(LoginActivity.loggedAccount.name.substring(0, 1).toUpperCase());
         username.setText(LoginActivity.loggedAccount.name);
         email.setText(LoginActivity.loggedAccount.email);
         balance.setText(formattedBalance);
@@ -66,6 +69,31 @@ public class AboutMeActivity extends AppCompatActivity {
     private void moveActivity(Context ctx, Class<?> cls) {
         Intent intent = new Intent(ctx, cls);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem accountItem = menu.findItem(R.id.account_profile);
+        MenuItem paymentItem = menu.findItem(R.id.payment);
+
+        searchItem.setVisible(false);
+        accountItem.setVisible(false);
+        paymentItem.setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logout) {
+            LoginActivity.loggedAccount = null;
+            moveActivity(AboutMeActivity.this, LoginActivity.class);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void renterSection() {
@@ -86,6 +114,7 @@ public class AboutMeActivity extends AppCompatActivity {
 
             registerCompany.setOnClickListener(v -> {
                 moveActivity(this, RegisterRenterActivity.class);
+                finish();
             });
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

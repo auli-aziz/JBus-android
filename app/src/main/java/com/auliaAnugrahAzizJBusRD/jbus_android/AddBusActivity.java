@@ -1,6 +1,7 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -185,6 +186,7 @@ public class AddBusActivity extends AppCompatActivity {
                 BaseResponse<Bus> res = response.body();
                 if (res.success) {
                     Toast.makeText(mContext, "Berhasil menambahkan bus", Toast.LENGTH_SHORT);
+                    moveActivity(AddBusActivity.this, ManageBusActivity.class);
                     finish();
                 }
                 Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
@@ -195,5 +197,10 @@ public class AddBusActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveActivity(Context ctx, Class<?> cls) {
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
     }
 }

@@ -1,6 +1,7 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +61,7 @@ public class RegisterRenterActivity extends AppCompatActivity {
                 if (res.success) {
                     Toast.makeText(mContext, "Berhasil mendaftar renter", Toast.LENGTH_SHORT);
                     LoginActivity.loggedAccount.company = res.payload;
+                    moveActivity(RegisterRenterActivity.this, AboutMeActivity.class);
                     finish();
                 }
                 Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
@@ -70,5 +72,10 @@ public class RegisterRenterActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void moveActivity(Context ctx, Class<?> cls) {
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
     }
 }

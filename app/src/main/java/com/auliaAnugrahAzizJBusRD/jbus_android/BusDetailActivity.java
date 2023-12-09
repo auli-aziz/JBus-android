@@ -49,10 +49,10 @@ public class BusDetailActivity extends AppCompatActivity {
         busCapacity = findViewById(R.id.capacity);
         busPrice = findViewById(R.id.price);
         departureStat = findViewById(R.id.departure_station);
-        departureCity = findViewById(R.id.departure_city);
+//        departureCity = findViewById(R.id.departure_city);
         departureAdd = findViewById(R.id.departure_address);
         arrivalStat = findViewById(R.id.arrival_station);
-        arrivalCity = findViewById(R.id.arrival_city);
+//        arrivalCity = findViewById(R.id.arrival_city);
         arrivalAdd = findViewById(R.id.arrival_address);
 
         Intent intent= getIntent();

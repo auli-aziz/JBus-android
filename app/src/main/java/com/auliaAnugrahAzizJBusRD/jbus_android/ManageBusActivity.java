@@ -52,6 +52,7 @@ public class ManageBusActivity extends AppCompatActivity {
 
         addBus.setOnClickListener(v -> {
             moveActivity(mContext, AddBusActivity.class);
+            finish();
         });
     }
 

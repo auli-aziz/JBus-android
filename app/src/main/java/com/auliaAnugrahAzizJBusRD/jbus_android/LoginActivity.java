@@ -22,7 +22,6 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
-//    Button loginBtn;
     private TextView registerNow = null;
     private Button loginButton = null;
     public static Account loggedAccount;
@@ -95,5 +94,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (loggedAccount != null) {
+            moveActivity(LoginActivity.this, MainActivity.class);
+        }
     }
 }
