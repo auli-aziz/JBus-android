@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private int pageSize = 6;
     private int listSize;
     private int noOfPages;
-    private List<Bus> listBus = new ArrayList<>();
+    public static List<Bus> allBus = new ArrayList<>();
     private Button prevButton = null;
     private Button nextButton = null;
     private ListView busListView;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 btns[index].setBackgroundDrawable(getResources().getDrawable(R.drawable.circle));
                 btns[i].setTextColor(getResources().getColor(android.R.color.white));
                 scrollToItem(btns[index]);
-                viewPaginatedList(listBus, currentPage);
+                viewPaginatedList(allBus, currentPage);
             } else {
                 btns[i].setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 btns[i].setTextColor(getResources().getColor(android.R.color.black));
@@ -104,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void viewPaginatedList(List<Bus> listBus, int page) {
+    private void viewPaginatedList(List<Bus> allBus, int page) {
         int startIndex = page * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, listBus.size());
-        List<Bus> paginatedList = listBus.subList(startIndex, endIndex);
+        int endIndex = Math.min(startIndex + pageSize, allBus.size());
+        List<Bus> paginatedList = allBus.subList(startIndex, endIndex);
 
         busArrayAdapter.clear();
         busArrayAdapter.addAll(paginatedList);
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                List<Bus> filteredList = filterBusList(listBus, newText);
+                List<Bus> filteredList = filterBusList(allBus, newText);
                 busArrayAdapter.clear();
                 busArrayAdapter.addAll(filteredList);
                 return false;
@@ -148,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private List<Bus> filterBusList(List<Bus> listBus, String query) {
+    private List<Bus> filterBusList(List<Bus> allBus, String query) {
         query = query.toLowerCase().trim();
         List<Bus> filteredList = new ArrayList<>();
-        for (Bus bus : listBus) {
+        for (Bus bus : allBus) {
             if (bus.name.trim().toLowerCase().contains(query)) {
                 filteredList.add(bus);
             }
@@ -187,10 +187,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (busList != null && !busList.isEmpty()) {
                     runOnUiThread(() -> {
-                        listBus.clear();
-                        listBus.addAll(busList);
+                        allBus.clear();
+                        allBus.addAll(busList);
                         busArrayAdapter.notifyDataSetChanged();
-                        listSize = listBus.size();
+                        listSize = allBus.size();
                         paginationFooter();
                         goToPage(currentPage);
 
