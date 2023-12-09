@@ -90,6 +90,14 @@ public interface BaseApiService{
             @Path("id") int id
     );
 
+    @POST("payment/{id}/cancel")
+    Call<BaseResponse<Payment>> cancel(
+            @Path("id") int id,
+            @Query("buyerId") int buyerId,
+            @Query("busId") int busId,
+            @Query("renterId") int renterId
+    );
+
     @GET("payment/getPayments")
     Call<List<Payment>> getPayments(
             @Query("buyerId") int buyerId

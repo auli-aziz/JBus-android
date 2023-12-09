@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import com.auliaAnugrahAzizJBusRD.R;
 import com.auliaAnugrahAzizJBusRD.jbus_android.array_adapter.BusArrayAdapter;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private BusArrayAdapter busArrayAdapter;
     private Button[] btns;
     private int currentPage = 0;
-    private int pageSize = 3;
+    private int pageSize = 6;
     private int listSize;
     private int noOfPages;
     private List<Bus> listBus = new ArrayList<>();
@@ -120,7 +121,40 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Type here to search");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                List<Bus> filteredList = filterBusList(listBus, newText);
+                busArrayAdapter.clear();
+                busArrayAdapter.addAll(filteredList);
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private List<Bus> filterBusList(List<Bus> listBus, String query) {
+        query = query.toLowerCase().trim();
+        List<Bus> filteredList = new ArrayList<>();
+        for (Bus bus : listBus) {
+            if (bus.name.trim().toLowerCase().contains(query)) {
+                filteredList.add(bus);
+            }
+        }
+        return filteredList;
     }
 
     @Override

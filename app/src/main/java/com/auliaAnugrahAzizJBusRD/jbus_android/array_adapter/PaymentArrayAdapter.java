@@ -62,6 +62,10 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         viewHolder.departureDate.setText(currentPaymentPosition.departureDate.toString());
         viewHolder.orderDate.setText(currentPaymentPosition.time.toString());
         viewHolder.status = currentPaymentPosition.status;
+        viewHolder.id = currentPaymentPosition.id;
+        viewHolder.renterId = currentPaymentPosition.renterId;
+        viewHolder.buyerId = currentPaymentPosition.buyerId;
+        viewHolder.busId = currentPaymentPosition.getBusId();
 
         if(viewHolder.status == Invoice.PaymentStatus.SUCCESS) {
             viewHolder.acceptButton.setEnabled(false);
@@ -74,7 +78,6 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                viewHolder.id = currentPaymentPosition.id;
                 Toast.makeText(context, "id: " +viewHolder.id, Toast.LENGTH_SHORT).show();
                 viewHolder.acceptButton.setEnabled(false);
                 handleAccept(viewHolder.id);
@@ -85,7 +88,8 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
             public void onClick(View v) {
                 viewHolder.acceptButton.setEnabled(false);
                 viewHolder.cancelButton.setEnabled(false);
-                // handleAccept();
+                Toast.makeText(context, "Id: " + viewHolder.id + "BuyerId: " + viewHolder.buyerId + "BusId: " + viewHolder.busId, Toast.LENGTH_LONG).show();
+                handleCancel(viewHolder.id, viewHolder.buyerId, viewHolder.busId, viewHolder.renterId);
             }
         });
 
@@ -94,7 +98,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
     }
 
     static class ViewHolder {
-        int id;
+        int id, buyerId, renterId, busId;
         Invoice.PaymentStatus status;
         TextView busSeats, departureDate, orderDate;
         Button acceptButton, cancelButton;
@@ -123,26 +127,26 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         });
     }
 
-//    protected void handleCancel(int id, int buyerId, int busId) {
-//        mApiService.cancel(id, buyerId, busId).enqueue(new Callback<BaseResponse<Payment>>() {
-//            @Override
-//            public void onResponse(Call<BaseResponse<Payment>> call, Response<BaseResponse<Payment>> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(context, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//                if (response.body() != null) {
-//                    BaseResponse<Payment> res = response.body();
-//                } else {
-//                    Toast.makeText(context, "Response body is null", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
-//                Toast.makeText(context, "Problem with the server", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    protected void handleCancel(int id, int buyerId, int busId, int renterId) {
+        mApiService.cancel(id, buyerId, busId, renterId).enqueue(new Callback<BaseResponse<Payment>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Payment>> call, Response<BaseResponse<Payment>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (response.body() != null) {
+                    BaseResponse<Payment> res = response.body();
+                } else {
+                    Toast.makeText(context, "Response body is null", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
+                Toast.makeText(context, "Problem with the server", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

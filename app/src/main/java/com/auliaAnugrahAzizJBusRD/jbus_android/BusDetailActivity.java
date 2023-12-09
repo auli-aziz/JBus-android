@@ -35,6 +35,12 @@ public class BusDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_detail);
 
+        try {
+            getSupportActionBar().hide();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         mContext = this;
         mApiService = UtilsApi.getApiService();
 
@@ -78,9 +84,9 @@ public class BusDetailActivity extends AppCompatActivity {
                 busPrice.setText(formattedPrice);
                 departureStat.setText(b.departure.stationName);
                 arrivalStat.setText(b.arrival.stationName);
-//                departureCity.setText(b.departure.city.toString());
+//                departureCity.setText(b.getDepartureCity());
                 departureAdd.setText(b.departure.address);
-//                arrivalCity.setText(b.arrival.city.toString());
+//                arrivalCity.setText(b.getArrivalCity());
                 arrivalAdd.setText(b.arrival.address);
                 accountId = b.accountId;
 
@@ -94,17 +100,4 @@ public class BusDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-//    protected void setDetail(Bundle b) {
-//        busName.setText(b.get("BUS_NAME").toString());
-//        busType.setText(b.get("BUS_TYPE").toString());
-//        busCapacity.setText(b.get("BUS_CAPACITY").toString());
-//        busPrice.setText(b.get("BUS_PRICE").toString());
-//        departureStat.setText(b.get("BUS_DEP_STAT").toString());
-//        departureCity.setText(b.get("BUS_DEP_CITY").toString());
-//        departureAdd.setText(b.get("BUS_DEP_ADD").toString());
-//        arrivalStat.setText(b.get("BUS_ARR_STAT").toString());
-//        arrivalCity.setText(b.get("BUS_ARR_CITY").toString());
-//        arrivalAdd.setText(b.get("BUS_ARR_ADD").toString());
-//    }
 }

@@ -103,24 +103,24 @@ public class MakeBookingActivity extends AppCompatActivity {
         });
     }
 
-//    protected void handleGetRenterId() {
-//        mApiService.getById(accountId).enqueue(new Callback<Account>() {
-//            @Override
-//            public void onResponse(Call<Account> call, Response<Account> response) {
-//                if (!response.isSuccessful()) {
-//                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//                renterId = response.body().company.id;
-//                Toast.makeText(mContext, "renter: " + renterId, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Account> call, Throwable t) {
-//                Toast.makeText(mContext, "Problem with the server 1", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    protected void handleGetRenterId(int accountId) {
+        mApiService.getById(accountId).enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                renterId = response.body().company.id;
+                Toast.makeText(mContext, "renter: " + renterId, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     // TODO: bisa beli bus sendiri
     protected void handleMakeBooking() {
@@ -151,7 +151,7 @@ public class MakeBookingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
-                Toast.makeText(mContext, "Problem with the server 2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -174,23 +174,7 @@ public class MakeBookingActivity extends AppCompatActivity {
 
                 accountId = b.accountId;
 
-                mApiService.getById(accountId).enqueue(new Callback<Account>() {
-                    @Override
-                    public void onResponse(Call<Account> call, Response<Account> response) {
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        renterId = response.body().company.id;
-
-                        Toast.makeText(mContext, "RenterId: " + renterId, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Account> call, Throwable t) {
-                        Toast.makeText(mContext, "Problem with the server 1", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                handleGetRenterId(accountId);
 
                 Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
 
@@ -210,7 +194,7 @@ public class MakeBookingActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Bus> call, Throwable t) {
-                Toast.makeText(mContext, "Problem with the server 3", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
     }

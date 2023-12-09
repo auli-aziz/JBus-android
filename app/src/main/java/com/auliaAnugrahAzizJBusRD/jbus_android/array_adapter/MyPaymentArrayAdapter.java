@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.auliaAnugrahAzizJBusRD.R;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.BaseResponse;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Invoice;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Payment;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
@@ -61,11 +63,20 @@ public class MyPaymentArrayAdapter extends ArrayAdapter<Payment> {
         viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
         viewHolder.busSched.setText(currentPaymentPosition.departureDate.toString());
         viewHolder.status.setText(currentPaymentPosition.status.toString());
+        viewHolder.id = currentPaymentPosition.id;
+        viewHolder.buyerId = currentPaymentPosition.buyerId;
+        viewHolder.renterId = currentPaymentPosition.renterId;
+        viewHolder.busId = currentPaymentPosition.getBusId();
+
+        if(currentPaymentPosition.status == Invoice.PaymentStatus.FAILED || currentPaymentPosition.status == Invoice.PaymentStatus.SUCCESS) {
+            viewHolder.cancelButton.setEnabled(false);
+        }
 
         viewHolder.cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewHolder.cancelButton.setEnabled(false);
+                handleCancel(viewHolder.id, viewHolder.buyerId, viewHolder.busId, viewHolder.renterId);
             }
         });
 
@@ -73,6 +84,8 @@ public class MyPaymentArrayAdapter extends ArrayAdapter<Payment> {
     }
 
     static class ViewHolder {
+        int id, buyerId, renterId, busId;
+        Invoice.PaymentStatus myStatus;
         TextView busName, busSeats, busSched, status;
         Button cancelButton;
     }
@@ -97,7 +110,26 @@ public class MyPaymentArrayAdapter extends ArrayAdapter<Payment> {
         });
     }
 
-    protected  void handleCancel() {
+    protected void handleCancel(int id, int buyerId, int busId, int renterId) {
+        mApiService.cancel(id, buyerId, busId, renterId).enqueue(new Callback<BaseResponse<Payment>>() {
+            @Override
+            public void onResponse(Call<BaseResponse<Payment>> call, Response<BaseResponse<Payment>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
+                if (response.body() != null) {
+                    BaseResponse<Payment> res = response.body();
+                } else {
+                    Toast.makeText(context, "Response body is null", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse<Payment>> call, Throwable t) {
+                Toast.makeText(context, "Problem with the server", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

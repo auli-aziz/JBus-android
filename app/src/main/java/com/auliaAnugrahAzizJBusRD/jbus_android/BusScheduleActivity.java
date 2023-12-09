@@ -1,11 +1,15 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,11 +27,10 @@ import retrofit2.Response;
 public class BusScheduleActivity extends AppCompatActivity {
     private Context mContext;
     private BaseApiService mApiService;
-    private TextView busTitle;
-    private EditText busSchedule;
-    private Button addSchedule;
+    private TextView busTitle, showDate, showTime;
+    private Button addSchedule, pickDate, pickTime;
     private int busId;
-    private String busName;
+    private String busName, year, month, dateOfMonth, hourOfDay, minute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +39,13 @@ public class BusScheduleActivity extends AppCompatActivity {
         mContext = this;
         mApiService = UtilsApi.getApiService();
         busTitle = findViewById(R.id.bus_name);
-        busSchedule = findViewById(R.id.bus_schedule);
         addSchedule = findViewById(R.id.add_schedule);
+
+        showDate = findViewById(R.id.show_date);
+        showTime = findViewById(R.id.show_time);
+
+        pickDate = findViewById(R.id.date_picker);
+        pickTime = findViewById(R.id.time_picker);
 
         Intent intent= getIntent();
         Bundle b = intent.getExtras();
@@ -52,15 +60,50 @@ public class BusScheduleActivity extends AppCompatActivity {
 
         busTitle.setText(busName);
 
+        pickDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDateDialog();
+            }
+        });
+
+        pickTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTimeDialog();
+            }
+        });
+
         addSchedule.setOnClickListener(v -> {
             handleAddSchedule();
         });
     }
 
+    private void openDateDialog() {
+        DatePickerDialog dateDialog = new DatePickerDialog(mContext, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                showDate.setText(String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf(dayOfMonth));
+            }
+        },
+                2024, 0, 1);
+        dateDialog.show();
+    }
+
+    private void openTimeDialog() {
+        TimePickerDialog timeDialog = new TimePickerDialog(mContext, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                showTime.setText(String.valueOf(hourOfDay)+":"+String.valueOf(minute)+":00");
+            }
+        }, 00, 00, true);
+        timeDialog.show();
+    }
+
     protected void handleAddSchedule() {
-        String busScheduleS = busSchedule.getText().toString();
-        if(busScheduleS.isEmpty()) {
-            Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+        String busScheduleS = showDate.getText().toString() + " " + showTime.getText().toString();
+        if(busScheduleS.equals(" ")) {
+            Toast.makeText(mContext, "Please set your schedule", Toast.LENGTH_SHORT).show();
             return;
         }
 
