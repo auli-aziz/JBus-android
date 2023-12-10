@@ -48,6 +48,7 @@ public class MakeBookingActivity extends AppCompatActivity {
     List<Schedule> schedList = new ArrayList<>();
     private Timestamp selectedSched;
     private int renterId, accountId;
+    private double price;
 
     AdapterView.OnItemSelectedListener scheduleOISL = new
             AdapterView.OnItemSelectedListener() {
@@ -141,7 +142,8 @@ public class MakeBookingActivity extends AppCompatActivity {
                 BaseResponse<Payment> res = response.body();
 
                 if (res.success) {
-                    Toast.makeText(mContext, "Berhasil menambahkan bus", Toast.LENGTH_SHORT);
+                    LoginActivity.loggedAccount.balance -= price;
+                    Toast.makeText(mContext, "Make Booking Successful", Toast.LENGTH_SHORT);
                     finish();
                 }
                 Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
@@ -164,7 +166,8 @@ public class MakeBookingActivity extends AppCompatActivity {
                 }
                 Bus b = response.body();
 
-                String formattedPrice = currencyFormat.format(b.price.price);
+                price = b.price.price;
+                String formattedPrice = currencyFormat.format(price);
 
                 seatPrice.setText("- " + formattedPrice);
                 departure.setText(b.departure.stationName);

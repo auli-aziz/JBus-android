@@ -57,7 +57,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         Payment currentPaymentPosition = getItem(position);
         mApiService = UtilsApi.getApiService();
 
-        viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
+        viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString().replaceAll("[\\[\\]]", ""));
         viewHolder.departureDate.setText(currentPaymentPosition.getDepartureDate());
 
         viewHolder.status = currentPaymentPosition.status;
@@ -77,7 +77,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(context, "id: " +viewHolder.id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "id: " +viewHolder.id, Toast.LENGTH_SHORT).show();
                 viewHolder.acceptButton.setEnabled(false);
                 handleAccept(viewHolder.id);
             }
@@ -87,7 +87,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
             public void onClick(View v) {
                 viewHolder.acceptButton.setEnabled(false);
                 viewHolder.cancelButton.setEnabled(false);
-                Toast.makeText(context, "Id: " + viewHolder.id + "BuyerId: " + viewHolder.buyerId + "BusId: " + viewHolder.busId, Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Id: " + viewHolder.id + "BuyerId: " + viewHolder.buyerId + "BusId: " + viewHolder.busId, Toast.LENGTH_LONG).show();
                 handleCancel(viewHolder.id, viewHolder.buyerId, viewHolder.busId, viewHolder.renterId);
             }
         });
