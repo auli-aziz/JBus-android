@@ -45,19 +45,19 @@ public class BusArrayAdapter extends ArrayAdapter<Bus> {
 
         Bus currentBusPosition = getItem(position);
 
-        TextView textView1 = currentItemView.findViewById(R.id.textView1);
-        textView1.setText(currentBusPosition.name);
+        TextView busName = currentItemView.findViewById(R.id.bus_name);
+        busName.setText(currentBusPosition.name);
 
         // TODO: fix null city
-        TextView textView2 = currentItemView.findViewById(R.id.textView2);
+        TextView depDest = currentItemView.findViewById(R.id.dep_dest);
         City dep = currentBusPosition.departure.city;
         City arr = currentBusPosition.arrival.city;
-        textView2.setText(((dep==null)? "N/A": dep) + " - " + ((arr==null)? "N/A": arr));
+        depDest.setText(((dep==null)? "N/A": dep) + " - " + ((arr==null)? "N/A": arr));
 
-        TextView textView3 = currentItemView.findViewById(R.id.textView3);
+        TextView price = currentItemView.findViewById(R.id.price);
 
         String formattedPrice = currencyFormat.format(currentBusPosition.price.price);
-        textView3.setText(formattedPrice);
+        price.setText(formattedPrice);
 
         LinearLayout ll = currentItemView.findViewById(R.id.bus_item);
         Button book = currentItemView.findViewById(R.id.book_button);

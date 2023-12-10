@@ -3,7 +3,6 @@ package com.auliaAnugrahAzizJBusRD.jbus_android;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.auliaAnugrahAzizJBusRD.R;
 import com.auliaAnugrahAzizJBusRD.jbus_android.array_adapter.PaymentArrayAdapter;
+import com.auliaAnugrahAzizJBusRD.jbus_android.model.Bus;
 import com.auliaAnugrahAzizJBusRD.jbus_android.model.Payment;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.BaseApiService;
 import com.auliaAnugrahAzizJBusRD.jbus_android.request.UtilsApi;
@@ -29,7 +29,7 @@ public class PaymentRequestsActivity extends AppCompatActivity {
     private ListView paymentListView = null;
     private List<Payment> listPayment = new ArrayList<>();
     public PaymentArrayAdapter paymentArrayAdapter;
-    private TextView busName;
+    private TextView busName, capacity;
     private int busId;
     private String name;
     @Override
@@ -48,6 +48,7 @@ public class PaymentRequestsActivity extends AppCompatActivity {
         paymentArrayAdapter = new PaymentArrayAdapter(this, listPayment);
 
         busName = findViewById(R.id.bus_name);
+        capacity = findViewById(R.id.capacity);
 
         paymentListView = findViewById(R.id.payment_list);
         paymentListView.setAdapter(paymentArrayAdapter);
@@ -63,7 +64,36 @@ public class PaymentRequestsActivity extends AppCompatActivity {
         }
 
         busName.setText(name);
+
+        handleGetBus();
         handleGetPaymentRequests();
+    }
+
+    protected void handleGetBus() {
+        mApiService.getByBusId(busId).enqueue(new Callback<Bus>() {
+            @Override
+            public void onResponse(Call<Bus> call, Response<Bus> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(mContext, "Application error " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Bus bus = response.body();
+                int seatCounter = 0;
+
+                if(bus != null) {
+                    capacity.setText(bus.getCapacity());
+                } else {
+                    Toast.makeText(mContext, "No Bus Info", Toast.LENGTH_SHORT);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Bus> call, Throwable t) {
+                Toast.makeText(mContext, "Response body is null", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     protected void handleGetPaymentRequests() {
@@ -92,8 +122,7 @@ public class PaymentRequestsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Payment>> call, Throwable t) {
-                Log.e("PaymentRequestsActivity", "Error in API call", t);
-                Toast.makeText(mContext, "Problem with the server*", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
             }
         });
     }

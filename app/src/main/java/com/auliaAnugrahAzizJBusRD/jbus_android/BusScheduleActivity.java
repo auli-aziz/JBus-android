@@ -53,7 +53,7 @@ public class BusScheduleActivity extends AppCompatActivity {
         if(b!=null) {
             busId = Integer.parseInt(b.get("BUS_ID").toString());
             busName = b.get("BUS_NAME").toString();
-            Toast.makeText(mContext, "Bus id: " + busId, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "Bus id: " + busId, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(mContext, "Cannot retrieve bus Id", Toast.LENGTH_SHORT).show();
         }

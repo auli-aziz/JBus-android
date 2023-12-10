@@ -46,7 +46,6 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
             viewHolder = new ViewHolder();
             viewHolder.busSeats = convertView.findViewById(R.id.bus_seats);
             viewHolder.departureDate = convertView.findViewById(R.id.departure_date);
-            viewHolder.orderDate = convertView.findViewById(R.id.order_date);
             viewHolder.acceptButton = convertView.findViewById(R.id.acc_button);
             viewHolder.cancelButton = convertView.findViewById(R.id.cancel_button);
 
@@ -59,8 +58,8 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
         mApiService = UtilsApi.getApiService();
 
         viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
-        viewHolder.departureDate.setText(currentPaymentPosition.departureDate.toString());
-        viewHolder.orderDate.setText(currentPaymentPosition.time.toString());
+        viewHolder.departureDate.setText(currentPaymentPosition.getDepartureDate());
+
         viewHolder.status = currentPaymentPosition.status;
         viewHolder.id = currentPaymentPosition.id;
         viewHolder.renterId = currentPaymentPosition.renterId;
@@ -100,7 +99,7 @@ public class PaymentArrayAdapter extends ArrayAdapter<Payment> {
     static class ViewHolder {
         int id, buyerId, renterId, busId;
         Invoice.PaymentStatus status;
-        TextView busSeats, departureDate, orderDate;
+        TextView busSeats, departureDate;
         Button acceptButton, cancelButton;
     }
 

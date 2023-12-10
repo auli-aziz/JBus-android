@@ -61,7 +61,7 @@ public class MyPaymentArrayAdapter extends ArrayAdapter<Payment> {
 
         handleGetBusDetails(viewHolder, currentPaymentPosition);
         viewHolder.busSeats.setText(currentPaymentPosition.busSeat.toString());
-        viewHolder.busSched.setText(currentPaymentPosition.departureDate.toString());
+        viewHolder.busSched.setText(currentPaymentPosition.getDepartureDate());
         viewHolder.status.setText(currentPaymentPosition.status.toString());
         viewHolder.id = currentPaymentPosition.id;
         viewHolder.buyerId = currentPaymentPosition.buyerId;

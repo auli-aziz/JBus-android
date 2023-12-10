@@ -95,8 +95,6 @@ public class MakeBookingActivity extends AppCompatActivity {
         handleDetails();
         String formattedBalance = currencyFormat.format(LoginActivity.loggedAccount.balance);
         balance.setText(formattedBalance);
-//        handleGetRenterId();
-
 
         makeBooking.setOnClickListener(v -> {
             handleMakeBooking();
@@ -104,7 +102,7 @@ public class MakeBookingActivity extends AppCompatActivity {
     }
 
     protected void handleGetRenterId(int accountId) {
-        mApiService.getById(accountId).enqueue(new Callback<Account>() {
+        mApiService.getAccountbyId(accountId).enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
                 if (!response.isSuccessful()) {
@@ -112,7 +110,7 @@ public class MakeBookingActivity extends AppCompatActivity {
                     return;
                 }
                 renterId = response.body().company.id;
-                Toast.makeText(mContext, "renter: " + renterId, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "renter: " + renterId, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -176,7 +174,7 @@ public class MakeBookingActivity extends AppCompatActivity {
 
                 handleGetRenterId(accountId);
 
-                Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
 
                 schedList = response.body().schedules;
 

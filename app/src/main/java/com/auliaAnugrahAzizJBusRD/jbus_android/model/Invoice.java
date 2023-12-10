@@ -1,20 +1,19 @@
 package com.auliaAnugrahAzizJBusRD.jbus_android.model;
 
+
 import java.sql.Timestamp;
 
 public class Invoice  extends Serializable {
-    public Timestamp time;
+    private Timestamp time;
     public int buyerId;
     public int renterId;
-    public BusRating rating;
     public PaymentStatus status;
 
-    public enum BusRating {
-        NONE,
-        NEUTRAL,
-        GOOD,
-        BAD;
-    }
+//    public String getOrderTime() {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//        sdf.setTimeZone(TimeZone.getDefault());
+//        return sdf.format(this.time);
+//    }
 
     public enum PaymentStatus {
         FAILED,

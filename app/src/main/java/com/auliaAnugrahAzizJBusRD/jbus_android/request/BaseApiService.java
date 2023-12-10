@@ -18,6 +18,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface BaseApiService{
+    // Account
     @GET("account/{id}")
     Call<Account> getAccountbyId (@Path("id") int id);
 
@@ -48,8 +49,12 @@ public interface BaseApiService{
             @Query("phoneNumber") String phoneNumber
     );
 
+    // Bus
     @GET("bus/getMyBus")
     Call<List<Bus>> getMyBus (@Query("accountId") int accountId);
+
+    @GET("bus/{id}")
+    Call<Bus> getByBusId(@Path("id") int id);
 
     @POST("bus/create")
     Call<BaseResponse<Bus>> create(
@@ -69,9 +74,6 @@ public interface BaseApiService{
             @Query("time") String time
     );
 
-    @GET("station/getAll")
-    Call<List<Station>> getAllStation ();
-
     @GET("bus/getBusDetails")
     Call<Bus> getBusDetails(
             @Query("busId") int busId
@@ -80,6 +82,7 @@ public interface BaseApiService{
     @GET("bus/getAll")
     Call<List<Bus>> getAllBus();
 
+    // Payment
     @GET("payment/getPaymentRequests")
     Call<List<Payment>> getPaymentRequests(
             @Query("busId") int busId
@@ -112,6 +115,7 @@ public interface BaseApiService{
             @Query("departureDate") String departureDate
     );
 
-    @GET("account/{id}")
-    Call<Account> getById(@Path("id") int id);
+    //Station
+    @GET("station/getAll")
+    Call<List<Station>> getAllStation ();
 }

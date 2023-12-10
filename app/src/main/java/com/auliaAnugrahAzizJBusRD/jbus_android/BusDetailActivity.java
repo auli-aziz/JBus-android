@@ -83,10 +83,8 @@ public class BusDetailActivity extends AppCompatActivity {
         busCapacity = findViewById(R.id.capacity);
         busPrice = findViewById(R.id.price);
         departureStat = findViewById(R.id.departure_station);
-//        departureCity = findViewById(R.id.departure_city);
         departureAdd = findViewById(R.id.departure_address);
         arrivalStat = findViewById(R.id.arrival_station);
-//        arrivalCity = findViewById(R.id.arrival_city);
         arrivalAdd = findViewById(R.id.arrival_address);
 
         // Facility checkbox id assignment
@@ -128,9 +126,7 @@ public class BusDetailActivity extends AppCompatActivity {
                 busPrice.setText(formattedPrice);
                 departureStat.setText(b.departure.stationName);
                 arrivalStat.setText(b.arrival.stationName);
-//                departureCity.setText(b.getDepartureCity());
                 departureAdd.setText(b.departure.address);
-//                arrivalCity.setText(b.getArrivalCity());
                 arrivalAdd.setText(b.arrival.address);
                 accountId = b.accountId;
 
@@ -146,7 +142,7 @@ public class BusDetailActivity extends AppCompatActivity {
                     Toast.makeText(mContext, "No facilities found", Toast.LENGTH_SHORT).show();
                 }
 
-                Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "AccountId: " + accountId, Toast.LENGTH_SHORT).show();
             }
 
 
