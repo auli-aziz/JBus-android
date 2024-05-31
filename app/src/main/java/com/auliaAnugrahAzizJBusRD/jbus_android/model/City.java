@@ -41,5 +41,9 @@ public enum City {
         public String toString() {
             return "Bali";
         }
+    },
+    SUKABUMI {
+        @Override
+        public String toString() { return "Sukabumi"; }
     }
 }
