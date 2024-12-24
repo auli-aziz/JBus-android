@@ -1,7 +1,7 @@
 
 # JBus
 
-JBus is the final project for Object-Oriented Programming Lab. This Android application provides a user-friendly platform for booking bus tickets seamlessly. It is designed to make the process of reserving seats, checking schedules, and managing bookings. This repository is specifically for the front-end part of the JBus android application. To connect to the back-end, the app uses SpringBoot framework. Click [here](https://github.com/auli-aziz/JBus-android.git) to visit the backend.
+JBus is the final project for Object-Oriented Programming Lab. This Android application provides a user-friendly platform for booking bus tickets seamlessly. It is designed to make the process of reserving seats, checking schedules, and managing bookings. This repository is specifically for the front-end part of the JBus android application. To connect to the back-end, the app uses SpringBoot framework. Click [here](https://github.com/auli-aziz/JBus.git) to visit the backend.
 
 * Target SDK    : Android version 33
 * Minimum SDK   : Android version 21
